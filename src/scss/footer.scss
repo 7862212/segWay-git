@@ -1,0 +1,90 @@
+//==================================FOOTER=====================================================
+
+.footer {
+
+	background-color: $mainGreyColor;
+
+	// .footer__container
+	&__container {
+		min-height: rem(91);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		@media (max-width: $tablet) {
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+	}
+
+	// .footer__logo
+	&__logo {
+		margin-left: rem(10);
+
+		@media (max-width: $tablet) {
+			margin-left: 0;
+			margin-bottom: rem(33);
+			margin-top: rem(20);
+			width: 100%;
+			text-align: center;
+		}
+	}
+
+	&__text-finish {
+		display: none;
+
+		@media (max-width: $tablet) {
+			display: block;
+			font-weight: 400;
+			line-height: math.div(21, 18);
+			text-align: center;
+			letter-spacing: 0.02em;
+			color: #FFFFFF;
+			margin-bottom: rem(13);
+		}
+	}
+
+	// .footer__text
+	&__text {
+		font-weight: 400;
+		font-size: rem(13);
+		@include adaptiveValue('font-size', 13, 18);
+		line-height: 119.3%;
+		text-align: center;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+
+		& :nth-child(2) {
+			margin-right: rem(40);
+			@include adaptiveValue('margin-right', 40, 20)
+		}
+
+		& :nth-child(3) {
+			margin-right: rem(40);
+			@include adaptiveValue('margin-right', 40, 20)
+		}
+
+		@media (max-width: $tablet) {
+			flex-wrap: wrap;
+			justify-content: center;
+			flex-direction: column;
+
+			& :nth-child(2) {
+				margin-bottom: rem(13);
+				margin-right: 0;
+			}
+
+			& :nth-child(3) {
+				margin-bottom: rem(13);
+				margin-right: 0;
+			}
+
+			& :nth-child(4) {
+				display: none;
+			}
+
+			margin-bottom: rem(70);
+		}
+	}
+}

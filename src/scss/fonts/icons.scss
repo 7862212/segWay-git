@@ -1,0 +1,41 @@
+%ic {
+	font-family: "icons";
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+[class*="_icon-"] {
+	&:before {
+		@extend %ic;
+		display: block;
+	}
+}
+
+._icon-tab1:before {
+	content: "\e949";
+}
+
+._icon-tab2:before {
+	content: "\e955";
+}
+
+._icon-tab3:before {
+	content: "\e958";
+}
+
+._icon-cart:before {
+	content: "\e93c";
+}
+
+._icon-instagram:before {
+	content: "\e93d";
+}
+
+._icon-phone:before {
+	content: "\e942";
+}
