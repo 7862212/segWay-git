@@ -26,24 +26,6 @@ document.querySelector('.slider-prev').addEventListener('click', function () {
 	sliderLine.style.left = -offset + 'px';
 });
 
-//===============================================================
-
-document.querySelectorAll('.warranty').forEach((e) => {
-
-	let tabTabs = e.querySelectorAll('.warranty-tabs .warranty-tab');
-	let tabContent = e.querySelectorAll('.warranty-content .warranty-block-content');
-
-	for (let i = 0; i < tabTabs.length; i++) {
-		tabTabs[0].click();
-		tabTabs[i].onclick = () => {
-			tabTabs.forEach((e) => { e.classList.remove('warranty-tab_active') });
-			tabContent.forEach((e) => { e.classList.remove('warranty-block-content_active') });
-			tabTabs[i].classList.add('warranty-tab_active');
-			tabContent[i].classList.add('warranty-block-content_active');
-		};
-	}
-});
-
 //============================ SLIDER ======================================
 
 function slider(selector) {
