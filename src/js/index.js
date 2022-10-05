@@ -1,3 +1,4 @@
+// ============================ БУРГЕР =====================
 let burgerMenu = document.getElementById('burger-menu');
 let overlay = document.getElementById('menu');
 burgerMenu.addEventListener('click', function () {
@@ -5,7 +6,7 @@ burgerMenu.addEventListener('click', function () {
 	overlay.classList.toggle("overlay");
 });
 
-
+// ========================== SLIDER BOTTOM =================
 let offset = 0;
 const sliderLine = document.querySelector('.reviews__slider-line');
 
@@ -42,47 +43,6 @@ document.querySelectorAll('.warranty').forEach((e) => {
 		};
 	}
 });
-
-
-//function initTabs(tabsContainer) {
-//	const activeTabClass = 'active';
-//	const activeContainerClass = 'active';
-//	const tabs = tabsContainer.querySelectorAll('.warranty-tab');
-//	const containers = tabsContainer.querySelectorAll('.warranty-block-content');
-
-//	function activateTab(identifier) {
-//		let tabToActivate;
-//		let containerToActivate;
-//		tabs.forEach(tab => {
-//			tab.classList.remove(activeTabClass);
-//			if (tab.dataset.tab == identifier) {
-//				tabToActivate = tab;
-//			}
-//		});
-//		containers.forEach(container => {
-//			container.classList.remove(activeContainerClass);
-//			if (container.dataset.container == identifier) {
-//				containerToActivate = container;
-//			}
-//		});
-//		tabToActivate.classList.add(activeTabClass);
-//		containerToActivate.classList.add(activeContainerClass);
-//	}
-
-//	activateTab(tabs[0].dataset.tab);
-
-//	tabs.forEach(tab => {
-//		tab.addEventListener('click', () => {
-//			activateTab(tab.dataset.tab);
-//		});
-//	});
-//}
-
-//initTabs(document.querySelectorAll('.warranty')[0]);
-//initTabs(document.querySelectorAll('.warranty')[1]);
-
-
-
 
 //============================ SLIDER ======================================
 
@@ -146,7 +106,7 @@ slider('#slider-4');
 slider('#slider-5');
 slider('#slider-6');
 
-//===================================================================================
+//======================================= TAB ============================================
 
 document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
 
@@ -186,12 +146,126 @@ document.addEventListener('DOMContentLoaded', () => { // Структура ст
 			setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой
 		})
 	}
-
 	tabs() // вызываем основную функцию
-
 })
 
 
+//=====================     tabs-warranty             ===============================
+
+document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
+
+	const tabs = () => { // объявляем основную функцию для вкладок, чтобы вся логика была в одном месте
+		const head = document.querySelector('.tabs-warranty__head') // ищем элемент с кнопками и записываем в константу
+		const body = document.querySelector('.tabs-warranty__body') // ищем элемент с контентом и записываем в константу
+
+		const getActiveTabName = () => { // объявляем функцию для получения названия активной вкладки
+			return head.querySelector('.tabs-warranty__tab-warranty_active').dataset.tab // возвращаем значение data-tab активной кнопки
+		};
+
+		const setActiveContent = () => { // объявляем функцию для установки активного элемента контента
+			if (body.querySelector('.tabs-warranty__content-warranty_active')) { // если уже есть активный элемент контента
+				body.querySelector('.tabs-warranty__content-warranty_active').classList.remove('tabs-warranty__content-warranty_active') // то скрываем его
+			}
+			body.querySelector(`[data-tab=${getActiveTabName()}]`).classList.add('tabs-warranty__content-warranty_active') // затем ищем элемент контента, у которого значение data-tab совпадает со значением data-tab активной кнопки и отображаем его
+		};
+
+		// проверяем при загрузке страницы, есть ли активная вкладка
+		if (!head.querySelector('.tabs-warranty__tab-warranty_active')) {  // если активной вкладки нет
+			head.querySelector('.tabs-warranty__tab-warranty').classList.add('tabs-warranty__tab-warranty_active') // то делаем активной по-умолчанию первую вкладку
+		}
+
+		setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой при загрузке страницы
+
+		head.addEventListener('click', e => { // при клике на .tabs__head
+			const caption = e.target.closest('.tabs-warranty__tab-warranty') // узнаем, был ли клик на кнопке
+			if (!caption) return // если клик был не на кнопке, то прерываем выполнение функции
+			if (caption.classList.contains('tabs-warranty__tab-warranty_active')) return // если клик был на активной кнопке, то тоже прерываем выполнение функции и ничего не делаем
+
+			if (head.querySelector('.tabs-warranty__tab-warranty_active')) { // если уже есть активная кнопка
+				head.querySelector('.tabs-warranty__tab-warranty_active').classList.remove('tabs-warranty__tab-warranty_active') // то удаляем ей активный класс
+			}
+
+			caption.classList.add('tabs-warranty__tab-warranty_active') // затем добавляем активный класс кнопке, на которой был клик
+
+			setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой
+		});
+	}
+
+	tabs(); // вызываем основную функцию
+
+});
+
+//===================== tabs-warranty ++++++доп блоки ===============================
+
+document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
+
+	const tabs = (tabsSelector, tabsHeadSelector, tabsBodySelector, tabsCaptionSelector, tabsCaptionActiveClass, tabsContentActiveClass) => { // объявляем основную функцию tabs, которая будет принимать CSS классы и селекторы
+
+		const tabs = document.querySelector(tabsSelector) // ищем на странице элемент по переданному селектору основного элемента вкладок и записываем в константу
+		const head = tabs.querySelector(tabsHeadSelector) // ищем в элементе tabs элемент с кнопками по переданному селектору и записываем в константу
+		const body = tabs.querySelector(tabsBodySelector) // ищем в элементе tabs элемент с контентом по переданному селектору и записываем в константу
+
+		const getActiveTabName = () => { // функция для получения названия активной вкладки
+			return head.querySelector(`.${tabsCaptionActiveClass}`).dataset.tab // возвращаем значение data-tab активной кнопки
+		};
+
+		const setActiveContent = () => { // функция для установки активного элемента контента
+			if (body.querySelector(`.${tabsContentActiveClass}`)) { // если уже есть активный элемент контента
+				body.querySelector(`.${tabsContentActiveClass}`).classList.remove(tabsContentActiveClass) // то скрываем его
+			}
+			body.querySelector(`[data-tab=${getActiveTabName()}]`).classList.add(tabsContentActiveClass) // затем ищем элемент контента, у которого значение data-tab совпадает со значением data-tab активной кнопки и отображаем его
+		};
+
+		// проверяем при загрузке страницы, есть ли активная вкладка
+		if (!head.querySelector(`.${tabsCaptionActiveClass}`)) { // если активной вкладки нет
+			head.querySelector(tabsCaptionSelector).classList.add(tabsCaptionActiveClass) // то делаем активной по-умолчанию первую вкладку
+		}
+
+		setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой при загрузке страницы
+
+		head.addEventListener('click', e => { // при клике на элемент с кнопками
+			const caption = e.target.closest(tabsCaptionSelector) // узнаем, был ли клик на кнопке
+			if (!caption) return // если клик был не на кнопке, то прерываем выполнение функции
+			if (caption.classList.contains(tabsCaptionActiveClass)) return // если клик был на активной кнопке, то тоже прерываем выполнение функции и ничего не делаем
+
+			if (head.querySelector(`.${tabsCaptionActiveClass}`)) { // если уже есть активная кнопка
+				head.querySelector(`.${tabsCaptionActiveClass}`).classList.remove(tabsCaptionActiveClass) // то удаляем ей активный класс
+			}
+
+			caption.classList.add(tabsCaptionActiveClass) // затем добавляем активный класс кнопке, на которой был клик
+
+			setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой
+		});
+	};
+
+	tabs(
+		'.tabs-warranty_e22',
+		'.tabs-warranty__head',
+		'.tabs-warranty__body',
+		'.tabs-warranty__tab-warranty',
+		'tabs-warranty__tab-warranty_active',
+		'tabs-warranty__content-warranty_active'
+	) // вызываем основную функцию tabs для синих вкладок .section__tabs
+
+	tabs(
+		'.tabs-warranty_es11',
+		'.tabs-warranty__head',
+		'.tabs-warranty__body',
+		'.tabs-warranty__tab-warranty',
+		'tabs-warranty__tab-warranty_active',
+		'tabs-warranty__content-warranty_active'
+	) // вызываем основную функцию tabs для синих вкладок .section__tabs
+
+	tabs(
+		'.tabs-warranty_t15',
+		'.tabs-warranty__head',
+		'.tabs-warranty__body',
+		'.tabs-warranty__tab-warranty',
+		'tabs-warranty__tab-warranty_active',
+		'tabs-warranty__content-warranty_active'
+	) // вызываем основную функцию tabs для зелёных вкладок .about__tabs
+
+});
 
 
 

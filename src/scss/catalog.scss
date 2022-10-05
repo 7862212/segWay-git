@@ -35,15 +35,18 @@
 
 .tabs-kickscooter {
 	background-color: $mainGreyColor;
-	//max-width: 65.875rem;
 	box-sizing: content-box;
 	margin: 0 auto;
 	padding: 0 0.9375rem;
-
 	display: flex;
 	justify-content: center;
-	overflow: auto;
+	align-items: center;
+	overflow-x: auto;
 	white-space: nowrap;
+	scroll-snap-type: x mandatory;
+	@media (max-width: $tablet) {
+		justify-content: flex-start;
+	}
 
 	// .tabs-kickscooter__tab-kickscooter
 	&__tab-kickscooter {
@@ -51,22 +54,20 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		flex: 0 0 10%;
 		background-color: $mainGreyColor;
 		color: rgb(255 255 255 / 40%);
 		text-align: center;
 		font-weight: 700;
 		@include adaptiveValue('font-size', 18, 15);
 		padding: rem(10) rem(30);
+		scroll-snap-align: start;
 
-		&:hover {
+		&:not(.tab-kickscooter_active):hover {
 			background: $mainBlueColor;
 			color: rgb(255 255 255 / 100%);
-		}
+			outline: 10px solid rgba(50, 57, 65);
+			outline-offset: -5px;
 
-		&:active {
-			background: $mainBlueColor;
-			color: rgb(255 255 255 / 100%);
 		}
 
 		& img {
@@ -79,6 +80,10 @@
 		// .tabs-kickscooter__tab-kickscooter
 		&_active {
 			background-color: $mainBlueColor;
+			color: rgb(255 255 255 / 100%);
+			outline: 10px solid rgba(50, 57, 65);
+			outline-offset: -5px;
+			scroll-snap-align: start;
 		}
 	}
 }
@@ -108,7 +113,6 @@
 		align-items: center;
 		justify-content: center;
 		background-color: $mainBlueColor;
-		border-top: 1px solid $mainGreyColor;
 		text-align: center;
 
 		@media (max-width: $mobile) {
@@ -175,26 +179,49 @@
 	}
 
 	// .contents-kickscooter__pic
-	&__pic {}
+	&__pic {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 50%;
+		@media (max-width: $tablet) {
+			flex: 0 0 100%;
+		}
+	}
 }
 
-.block-warranty {
+.tabs-warranty {
+	overflow: hidden;
+	border-radius: 15px;
 
-	// .block-warranty__desc
+	// .tabs-warranty_e22
+	&_e22 {}
+
+	// .tabs-warranty_es11
+	&_es11 {}
+
+	// .tabs-warranty_t15
+	&_t15 {}
+
+	// .tabs-warranty__desc
 	&__desc {
 		margin-top: rem(37);
 		margin-bottom: rem(10);
 	}
 
-	// .block-warranty__tab
-	&__tab {
-		display: none;
+	// .tabs-warranty__head
+	&__head {
+		display: flex;
+		align-items: flex-end;
+		flex-wrap: wrap;
 	}
 
-	// .block-warranty__title
-	&__tab-title {
-		display: inline-flex;
-		width: 32%;
+	// .tabs-warranty__tab-warranty
+	&__tab-warranty {
+		opacity: 0.6;
+		flex: 1;
+		text-align: center;
+		user-select: none;
 		filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 		border: 1px solid $mainGrey2Color;
 		padding: rem(10) rem(40);
@@ -202,33 +229,68 @@
 		line-height: 119.3%;
 		color: $mainGreyColor;
 		cursor: pointer;
+		transition: 0.25s;
 
 		&:hover {
+			opacity: 0.8;
 			background-color: $mainBlueColor;
 			color: rgb(255 255 255 / 100%);
 		}
 
 		&:active {
+			opacity: 1;
 			background-color: $mainBlueColor;
 			color: rgb(255 255 255 / 100%);
 		}
 	}
 
-	section {
-		display: none;
+	&__tab-warranty:not(:last-child) {
+		margin-right: rem(5);
 	}
 
-	// .block-warranty__content
-	&__content {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+	&__tab-warranty_active {
+		opacity: 1;
+		background-color: $mainBlueColor;
+		color: rgb(255 255 255 / 100%);
+	}
+
+	// .tabs-warranty__body
+	&__body {
+		position: relative;
+		top: -2px;
+		transition: 0.25s;
+	}
+
+	// .tabs-warranty__content
+	&__content-warranty {
+		display: none;
 		margin-bottom: rem(20);
 		margin-top: rem(20);
-		//display: none;
+		transform: scaleY(0.8);
+		opacity: 0;
+		display: none;
+		transform-origin: center top;
+		animation: showContent 0.6s forwards
 	}
 
-	// .block-warranty__price
+	&__content-warranty_active {
+		display: flex;
+	}
+
+	@keyframes showContent {
+		0% {
+			transform: scaleY(0.8);
+			opacity: 0;
+		}
+
+		100% {
+			transform: scaleY(1);
+			opacity: 1;
+		}
+	}
+
+
+	// .tabs-warranty__price
 	&__price {
 		flex: 0 1 33.333%;
 
@@ -246,7 +308,7 @@
 		}
 	}
 
-	// .block-warranty__text
+	// .tabs-warranty__text
 	&__text {
 		flex: 0 1 33.333%;
 		font-style: italic;
@@ -260,14 +322,14 @@
 		justify-content: center;
 	}
 
-	// .block-warranty__pic
+	// .tabs-warranty__pic
 	&__pic {
 		flex: 0 1 33.333%;
 		display: flex;
 		justify-content: center;
 	}
 
-	// .block-warranty__buttons
+	// .tabs-warranty__buttons
 	&__buttons {
 		display: inline-flex;
 		align-items: center;
@@ -276,7 +338,7 @@
 		font-weight: 700;
 		margin-bottom: rem(40);
 
-		// .block-warranty__buttons_buy-it-now
+		// .tabs-warranty__buttons_buy-it-now
 		&_buy-it-now {
 			margin-right: rem(23);
 			background-color: $mainBlueColor;
@@ -285,7 +347,7 @@
 			height: rem(48);
 		}
 
-		// .block-warranty__buttons_add-to-cart
+		// .tabs-warranty__buttons_add-to-cart
 		&_add-to-cart {
 			background-color: $mainBlueColor;
 			color: #FFFFFF;
@@ -294,21 +356,8 @@
 		}
 	}
 
-	// .block-warranty__discount-cards
+	// .tabs-warranty__discount-cards
 	&__discount-cards {}
-
-	#warranty-tab1:checked~#contentTab1,
-	#warranty-tab2:checked~#contentTab2,
-	#warranty-tab3:checked~#contentTab3 {
-		display: flex;
-	}
-
-	#warranty-tab1:checked~#warranty-tab1Label,
-	#warranty-tab2:checked~#warranty-tab2Label,
-	#warranty-tab3:checked~#warranty-tab3Label {
-		background-color: $mainBlueColor;
-		color: rgb(255 255 255 / 100%);
-	}
 }
 
 .cards-discount {
@@ -722,3 +771,5 @@
 	border-color: transparent;
 	background-color: var(--color-2);
 }
+
+
